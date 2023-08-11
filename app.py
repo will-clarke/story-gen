@@ -57,7 +57,8 @@ def process(genres, tones, length):
     print(out)
 
     u   = str(uuid.uuid4())
-    cursor.execute("INSERT INTO stories VALUES ('%s', '%s', '%s', DATE('now'), DATE('now'))" %(u, out, f))
+
+    cursor.execute("INSERT INTO stories VALUES (?, ?, ?, DATE('now'), DATE('now'))", (u, out, f))
 
     for genre in genres:
         cursor.execute("INSERT INTO story_categories VALUES ('%s', 'genre', '%s' )" %(u, genre))
