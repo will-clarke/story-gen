@@ -4,20 +4,28 @@ import random
 from langchain.llms import CTransformers
 from langchain.prompts import  PromptTemplate
 from langchain.chains import LLMChain
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from models.story import Story, StoryCategory
 
 potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
 potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
 
-db.setup()
-# db.load_fake_data()
+engine = db.setup()
+session = Session(engine)
+
+stmt = select(Story)
+
+for story in session.scalars(stmt):
+    print(story)
+
+#db.load_fake_data()
 
 # TheBloke/Llama-2-7B-Chat-GGML
 
-cursor = db.cursor
-
-rows = cursor.execute("SELECT * from stories").fetchall()
-print(rows)
-rows = cursor.execute("SELECT * from story_categories").fetchall()
+# rows = cursor.execute("SELECT * from stories").fetchall()
+# print(rows)
+# rows = cursor.execute("SELECT * from story_categories").fetchall()
 
 
 prompt = PromptTemplate.from_template("""
@@ -50,18 +58,16 @@ def process(genres, tones, length):
     f = prompt.format(genres=", ".join(genres), tones=", ".join(tones), length=length)
     print(f)
 
-    out = chain.run(genres=genres, tones=tones, length=length)
+    # out = chain.run(genres=genres, tones=tones, length=length)
+    out = "hey jude"
     print(out)
 
-    u   = str(uuid.uuid4())
+    categories=[StoryCategory(category_type="tones", category=t) for t in tones] + [
+            StoryCategory(category_type="genres", category=g) for g in genres]
+    s = Story(text=out, prompt=f, categories=categories)
 
-    cursor.execute("INSERT INTO stories VALUES (?, ?, ?, DATE('now'), DATE('now'))", (u, out, f))
-
-    for genre in genres:
-        cursor.execute("INSERT INTO story_categories VALUES ('%s', 'genre', '%s' )" %(u, genre))
-    for tone in tones:
-        cursor.execute("INSERT INTO story_categories VALUES ('%s', 'tone', '%s' )" %(u, tone))
-    db.connection.commit()
+    session.add(s)
+    session.commit()
 
 
 for i in range(0, 1000):
@@ -73,5 +79,4 @@ for i in range(0, 1000):
     process(genres, tones, length)
 
 
-db.close()
 exit()
