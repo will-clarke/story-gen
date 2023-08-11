@@ -2,21 +2,16 @@ import db
 import uuid
 import random
 from langchain.llms import CTransformers
-from langchain.prompts.chat import (
-    PromptTemplate,
-    # ChatPromptTemplate,
-    # SystemMessagePromptTemplate,
-    # HumanMessagePromptTemplate,
-)
+from langchain.prompts import  PromptTemplate
 from langchain.chains import LLMChain
-from langchain.schema import BaseOutputParser
 
-
-potential_genres = ["historical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
+potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
 potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
 
 db.setup()
 # db.load_fake_data()
+
+# TheBloke/Llama-2-7B-Chat-GGML
 
 cursor = db.cursor
 
@@ -25,33 +20,35 @@ print(rows)
 rows = cursor.execute("SELECT * from story_categories").fetchall()
 
 
+prompt = PromptTemplate.from_template("""
+I want you to write an interesting and absorbing short stort with the following genres: {genres}.
+
+It should have the following tone: {tones}.
+
+Make in interesting and fun and {length} words long.
+
+Start with the title on the first line then the story on the next line.
+""")
+
+model_name = "./models/llama-2-7b-chat-ggml.bin"
+model_name = "TheBloke/Llama-2-7B-Chat-GGML"
+
+llm = CTransformers(
+    model=model_name,
+    model_type="llama",
+    # config=config,
+# config = {'max_new_tokens': 256, 'repetition_penalty': 1.1}
+    client=None
+)
+
+chain = LLMChain(
+    llm=llm,
+    prompt=prompt,
+)
 
 def process(genres, tones, length):
-    prompt = PromptTemplate.from_template("""
-    I want you to write an interesting and absorbing short stort with the following genres: {genres}.
-
-    It should have the following tone: {tones}.
-
-    Make in interesting and fun and {length} words long.
-
-    Start with the title on the first line then the story on the next line.
-    """)
     f = prompt.format(genres=", ".join(genres), tones=", ".join(tones), length=length)
     print(f)
-
-    model_name = "./models/llama-2-7b-chat-ggml.bin"
-    llm = CTransformers(
-        model=model_name,
-        model_type="llama",
-        # config=config,
-# config = {'max_new_tokens': 256, 'repetition_penalty': 1.1}
-        client=None
-    )
-
-    chain = LLMChain(
-        llm=llm,
-        prompt=prompt,
-    )
 
     out = chain.run(genres=genres, tones=tones, length=length)
     print(out)
