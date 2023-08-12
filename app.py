@@ -6,7 +6,7 @@ from langchain.prompts import  PromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from models.story import Story, StoryCategory
+from models import Story, StoryCategory
 
 potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
 potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
@@ -23,17 +23,12 @@ for story in session.scalars(stmt):
 
 # TheBloke/Llama-2-7B-Chat-GGML
 
-# rows = cursor.execute("SELECT * from stories").fetchall()
-# print(rows)
-# rows = cursor.execute("SELECT * from story_categories").fetchall()
-
-
 prompt = PromptTemplate.from_template("""
-I want you to write an interesting and absorbing short stort with the following genres: {genres}.
+I want you to write an interesting and absorbing short story with the following genres: {genres}.
 
 It should have the following tone: {tones}.
 
-Make in interesting and fun and {length} words long.
+Make in interesting and fun and roughly maximum {length} words long.
 
 Start with the title on the first line then the story on the next line.
 """)
@@ -58,8 +53,7 @@ def process(genres, tones, length):
     f = prompt.format(genres=", ".join(genres), tones=", ".join(tones), length=length)
     print(f)
 
-    # out = chain.run(genres=genres, tones=tones, length=length)
-    out = "hey jude"
+    out = chain.run(genres=genres, tones=tones, length=length)
     print(out)
 
     categories=[StoryCategory(category_type="tones", category=t) for t in tones] + [
