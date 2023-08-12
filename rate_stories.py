@@ -3,9 +3,8 @@ import random
 from langchain.llms import CTransformers
 from langchain.prompts import  PromptTemplate
 from langchain.chains import LLMChain
-from sqlalchemy import select
 from sqlalchemy.orm import Session
-from models import Story, StoryCategory
+from models import Story, StoryCategory, StoryRating
 
 potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
 potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
@@ -13,10 +12,23 @@ potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", 
 engine = db.setup()
 session = Session(engine)
 
-stmt = select(Story)
 
-for story in session.scalars(stmt):
-    print(story)
+s = session.query(Story).limit(10).all()
+print(s)
+print(len(s))
+print(len(s))
+print(len(s))
+a = s[0]
+print(a)
+c = a.categories
+
+print(a.ratings)
+print(a.model_name)
+print("len c" , len(c))
+print("c[0]", c[0])
+
+exit()
+
 
 prompt = PromptTemplate.from_template("""
 I want you to write an interesting and absorbing short story with the following genres: {genres}.

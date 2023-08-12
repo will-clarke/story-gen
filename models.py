@@ -1,5 +1,6 @@
 import datetime
 import uuid
+import re
 
 from typing import List
 from sqlalchemy import ForeignKey
@@ -27,6 +28,12 @@ class Story(Base):
     categories: Mapped[List["StoryCategory"]] = relationship("StoryCategory", back_populates="story")
     ratings: Mapped[List["StoryRating"]] = relationship("StoryRating", back_populates="story")
 
+    def __repr__(self):
+        text_preview = self.text[:40] if self.text and len(self.text) >= 40 else self.text
+        text_preview.replace("\n", " ")
+        text_preview = re.sub(r"\s+", " ", text_preview)
+        return f"Story({text_preview})\n"
+
 class StoryCategory(Base):
     __tablename__ = 'story_categories'
     story_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('stories.id'), primary_key=True)
@@ -35,10 +42,18 @@ class StoryCategory(Base):
     category: Mapped[str] = mapped_column(String, primary_key=True)
     story: Mapped["Story"] = relationship("Story", back_populates="categories")
 
+    def __repr__(self):
+        return f"({self.category_type}: {self.category})\n"
+
+
+
 class StoryRating(Base):
     __tablename__ = 'story_ratings'
     story_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('stories.id'), primary_key=True)
 
     rating_type: Mapped[str] = mapped_column(String, primary_key=True)
     rating: Mapped[int] = mapped_column(Integer, primary_key=True)
-    story: Mapped["Story"] = relationship("Story", back_populates="categories")
+    story: Mapped["Story"] = relationship("Story", back_populates="ratings")
+
+    def __repr__(self):
+        return f"({self.rating_type}: {self.rating})\n"
