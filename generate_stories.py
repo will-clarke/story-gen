@@ -9,7 +9,6 @@ from models import Story, StoryCategory, StoryRating
 
 # TODO
 # - [ ] Tidy up
-# - [ ] Add a way to extract the title & add it to the model
 
 potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
 potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
@@ -41,17 +40,32 @@ chain = LLMChain(
     prompt=prompt,
 )
 
+def extract_title(text):
+    lines = text.strip().split("\n")
+    if len(lines) < 2:
+        return "", text
+    title = lines[0]
+    story_text = "\n".join(lines[1:])
+    title = title.strip()
+    story_text = story_text.strip()
+    title = title.replace("Title: ", "")
+    title = title.replace("Example: ", "")
+    return title, story_text
+
 def process(genres, tones, length):
     f = prompt.format(genres=", ".join(genres), tones=", ".join(tones), length=length)
-    print(f)
-
     out = chain.run(genres=genres, tones=tones, length=length)
     print(out)
+
+    title, story_text = extract_title(out)
+    if title == "":
+        return
 
     categories=[StoryCategory(category_type="tones", category=t) for t in tones] + [
             StoryCategory(category_type="genres", category=g) for g in genres]
     s = Story(
-        text=out,
+        title=title,
+        text=story_text,
         prompt=f,
         categories=categories,
         model_name=model_name,
@@ -62,10 +76,11 @@ def process(genres, tones, length):
     session.commit()
 
 
-for i in range(0, 100000):
-    genres = [random.choice(potential_genres) for _ in range(0, random.randint(1, 5))]
-    genres = list(set(genres))
-    tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 5))]
-    tones = list(set(tones))
-    length = random.choice(["10", "50", "100", "200", "500", "1000", "2000"])
-    process(genres, tones, length)
+if __name__ == "__main__":
+    for i in range(0, 100000):
+        genres = [random.choice(potential_genres) for _ in range(0, random.randint(1, 5))]
+        genres = list(set(genres))
+        tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 5))]
+        tones = list(set(tones))
+        length = random.choice(["10", "50", "100", "200", "500", "1000", "2000"])
+        process(genres, tones, length)

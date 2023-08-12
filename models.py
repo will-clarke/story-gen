@@ -26,8 +26,8 @@ class Story(Base):
     model_name: Mapped[str] = mapped_column(String)
     update_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
     created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
-    categories: Mapped[List["StoryCategory"]] = relationship("StoryCategory", back_populates="story")
-    ratings: Mapped[List["StoryRating"]] = relationship("StoryRating", back_populates="story")
+    categories: Mapped[List["StoryCategory"]] = relationship("StoryCategory", back_populates="story", cascade='all, delete-orphan')
+    ratings: Mapped[List["StoryRating"]] = relationship("StoryRating", back_populates="story", cascade='all, delete-orphan')
 
     def __repr__(self):
         text_preview = self.text[:40] if self.text and len(self.text) >= 40 else self.text
