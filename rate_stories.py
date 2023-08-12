@@ -13,23 +13,20 @@ engine = db.setup()
 session = Session(engine)
 
 
-s = session.query(Story).limit(10).all()
-print(s)
-print(len(s))
-print(len(s))
-print(len(s))
-a = s[0]
-print(a)
-c = a.categories
-
-print(a.ratings)
-print(a.model_name)
-print("len c" , len(c))
-print("c[0]", c[0])
-
-exit()
+# s = session.query(Story).limit(10).all()
+# print(s)
+# print("---------------------------")
+# s = session.query(StoryCategory).limit(10).all()
+# print(s)
 
 
+rating_criteria= [
+        "originality",
+        "close to genres",
+        "close to tones",
+        "generally good",
+        "interesting",
+        ]
 prompt = PromptTemplate.from_template("""
 I want you to write an interesting and absorbing short story with the following genres: {genres}.
 

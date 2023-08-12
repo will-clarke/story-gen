@@ -19,6 +19,7 @@ class Story(Base):
     __tablename__ = 'stories'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    title: Mapped[str] = mapped_column(String)
     text: Mapped[str] = mapped_column(String)
     prompt: Mapped[str] = mapped_column(String)
     length: Mapped[int] = mapped_column(Integer)

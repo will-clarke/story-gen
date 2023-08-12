@@ -6,6 +6,11 @@ from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
 from models import Story, StoryCategory, StoryRating
 
+
+# TODO
+# - [ ] Tidy up
+# - [ ] Add a way to extract the title & add it to the model
+
 potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
 potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
 
@@ -62,5 +67,5 @@ for i in range(0, 100000):
     genres = list(set(genres))
     tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 5))]
     tones = list(set(tones))
-    length = random.choice(["10", "50", "100", "200", "500"])
+    length = random.choice(["10", "50", "100", "200", "500", "1000", "2000"])
     process(genres, tones, length)
