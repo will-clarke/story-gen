@@ -35,6 +35,7 @@ class Story(Base):
         text_preview = re.sub(r"\s+", " ", text_preview)
         return f"Story({text_preview})\n"
 
+
 class StoryCategory(Base):
     __tablename__ = 'story_categories'
     story_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('stories.id'), primary_key=True)
@@ -45,7 +46,6 @@ class StoryCategory(Base):
 
     def __repr__(self):
         return f"({self.category_type}: {self.category})\n"
-
 
 
 class StoryRating(Base):

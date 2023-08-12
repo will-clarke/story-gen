@@ -28,13 +28,18 @@ rating_criteria= [
         "interesting",
         ]
 prompt = PromptTemplate.from_template("""
-I want you to write an interesting and absorbing short story with the following genres: {genres}.
+The following is a story. It is called "{title}".
+Please rate how good you think it is on a scale of 1 to 10, where 1 is the worst and 10 is the best.
+Take into account the following criteria:
+- Originality
+- Interest
+- How well it fits the genres ({genres})
+- How well it fits the tones ({tones})
+- General writing style
+- Consistency
 
-It should have the following tone: {tones}.
+{story}
 
-Make in interesting and fun and roughly maximum {length} words long.
-
-Start with the title on the first line then the story on the next line.
 """)
 
 model_name = "./models/llama-2-7b-chat-ggml.bin"
@@ -51,31 +56,15 @@ chain = LLMChain(
     prompt=prompt,
 )
 
-def process(genres, tones, length):
-    f = prompt.format(genres=", ".join(genres), tones=", ".join(tones), length=length)
-    print(f)
-
-    out = chain.run(genres=genres, tones=tones, length=length)
-    print(out)
-
-    categories=[StoryCategory(category_type="tones", category=t) for t in tones] + [
-            StoryCategory(category_type="genres", category=g) for g in genres]
-    s = Story(
-        text=out,
-        prompt=f,
-        categories=categories,
-        model_name=model_name,
-        length=length,
-    )
-
-    session.add(s)
-    session.commit()
 
 
-for i in range(0, 100000):
-    genres = [random.choice(potential_genres) for _ in range(0, random.randint(1, 5))]
-    genres = list(set(genres))
-    tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 5))]
-    tones = list(set(tones))
-    length = random.choice(["10", "50", "100", "200", "500"])
-    process(genres, tones, length)
+def rate_story(story: Story):
+    pass
+
+
+
+
+if __name__ == "__main__":
+    stories_with_no_categories = session.query(Story).filter(~Story.categories.any()).all()
+    for s in stories_with_no_categories:
+        rate_story(s)
