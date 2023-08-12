@@ -1,5 +1,4 @@
 import db
-import uuid
 import random
 from langchain.llms import CTransformers
 from langchain.prompts import  PromptTemplate
@@ -18,10 +17,6 @@ stmt = select(Story)
 
 for story in session.scalars(stmt):
     print(story)
-
-#db.load_fake_data()
-
-# TheBloke/Llama-2-7B-Chat-GGML
 
 prompt = PromptTemplate.from_template("""
 I want you to write an interesting and absorbing short story with the following genres: {genres}.
@@ -58,13 +53,19 @@ def process(genres, tones, length):
 
     categories=[StoryCategory(category_type="tones", category=t) for t in tones] + [
             StoryCategory(category_type="genres", category=g) for g in genres]
-    s = Story(text=out, prompt=f, categories=categories)
+    s = Story(
+        text=out,
+        prompt=f,
+        categories=categories,
+        model_name=model_name,
+        length=length,
+    )
 
     session.add(s)
     session.commit()
 
 
-for i in range(0, 1000):
+for i in range(0, 100000):
     genres = [random.choice(potential_genres) for _ in range(0, random.randint(1, 5))]
     genres = list(set(genres))
     tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 5))]
