@@ -40,5 +40,5 @@ class StoryRating(Base):
     story_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('stories.id'), primary_key=True)
 
     rating_type: Mapped[str] = mapped_column(String, primary_key=True)
-    rating: Mapped[str] = mapped_column(String, primary_key=True)
+    rating: Mapped[int] = mapped_column(Integer, primary_key=True)
     story: Mapped["Story"] = relationship("Story", back_populates="categories")
