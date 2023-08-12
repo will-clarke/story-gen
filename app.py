@@ -34,8 +34,6 @@ model_name = "TheBloke/Llama-2-7B-Chat-GGML"
 llm = CTransformers(
     model=model_name,
     model_type="llama",
-    # config=config,
-# config = {'max_new_tokens': 256, 'repetition_penalty': 1.1}
     client=None
 )
 
@@ -72,6 +70,3 @@ for i in range(0, 100000):
     tones = list(set(tones))
     length = random.choice(["10", "50", "100", "200", "500"])
     process(genres, tones, length)
-
-
-exit()

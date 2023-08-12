@@ -25,6 +25,7 @@ class Story(Base):
     update_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
     created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
     categories: Mapped[List["StoryCategory"]] = relationship("StoryCategory", back_populates="story")
+    ratings: Mapped[List["StoryRating"]] = relationship("StoryRating", back_populates="story")
 
 class StoryCategory(Base):
     __tablename__ = 'story_categories'
@@ -32,4 +33,12 @@ class StoryCategory(Base):
 
     category_type: Mapped[str] = mapped_column(String, primary_key=True)
     category: Mapped[str] = mapped_column(String, primary_key=True)
+    story: Mapped["Story"] = relationship("Story", back_populates="categories")
+
+class StoryRating(Base):
+    __tablename__ = 'story_ratings'
+    story_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('stories.id'), primary_key=True)
+
+    rating_type: Mapped[str] = mapped_column(String, primary_key=True)
+    rating: Mapped[str] = mapped_column(String, primary_key=True)
     story: Mapped["Story"] = relationship("Story", back_populates="categories")
