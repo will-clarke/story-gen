@@ -98,7 +98,7 @@ def rate_story(story: Story):
         story=story.title
     )
 
-
+    rating, out = extract_rating(out)
 
     r = StoryRating(
         story_id=story.id,
