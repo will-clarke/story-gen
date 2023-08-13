@@ -30,7 +30,7 @@ class Story(Base):
     ratings: Mapped[List["StoryRating"]] = relationship("StoryRating", back_populates="story", cascade='all, delete-orphan')
 
     def __repr__(self):
-        text_preview = self.text[:40] if self.text and len(self.text) >= 40 else self.text
+        text_preview = self.title[:40] if self.title and len(self.title) >= 40 else self.title
         text_preview.replace("\n", " ")
         text_preview = re.sub(r"\s+", " ", text_preview)
         return f"Story({text_preview})\n"
@@ -56,6 +56,7 @@ class StoryRating(Base):
     rating: Mapped[int] = mapped_column(Integer, primary_key=True)
     prompt: Mapped[str] = mapped_column(String)
     model_name: Mapped[str] = mapped_column(String)
+    model_output: Mapped[str] = mapped_column(String, default="")
     story: Mapped["Story"] = relationship("Story", back_populates="ratings")
 
     def __repr__(self):

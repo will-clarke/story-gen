@@ -1,4 +1,6 @@
 import db
+import re
+from typing import Tuple
 import random
 from langchain.llms import CTransformers
 from langchain.prompts import  PromptTemplate
@@ -71,27 +73,39 @@ chain = LLMChain(
     prompt=prompt,
 )
 
+def extract_rating(out: str) -> Tuple[int, str]:
+    out = out.strip()
+    # Use a regex to extract the rating integer from the string
+    # The rating is in the format "34/100: The story is not coherent and the writing style is poor."
+    # We want to extract the 34 from this string
+    rating_match = re.search(r"(\d+)/100", out)
+    rating = 0
+    if rating_match:
+        rating = rating_match.group(1)
+    out = re.sub(r"\d+/100[\.\s:]?", "", out)
+    return int(rating), out
+
 def rate_story(story: Story):
     f = prompt.format(
         title=story.title,
         categories=", ".join([c.category for c in story.categories]),
-        story=story.text
+        story=story.title
 )
 
     out = chain.run(
         title=story.title,
         categories=", ".join([c.category for c in story.categories]),
-        story=story.text
+        story=story.title
     )
 
 
-    rating = out.split("\n")[-1]
 
     r = StoryRating(
         story_id=story.id,
         rating_type="overallv1",
         rating=rating,
-        prompt=prompt,
+        prompt=f,
+        model_output=out,
         model_name=model_name,
         )
 
@@ -100,6 +114,6 @@ def rate_story(story: Story):
     session.commit()
 
 if __name__ == "__main__":
-    stories_with_no_ratings = session.query(Story).filter(~Story.ratings.any()).limit(1).all()
+    stories_with_no_ratings = session.query(Story).filter(~Story.ratings.any()).all()
     for s in stories_with_no_ratings:
         rate_story(s)
