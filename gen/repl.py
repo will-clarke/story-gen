@@ -19,4 +19,8 @@ print(stories)
 story = stories[0]
 s = story
 
+
+a = session.query(StoryRating).order_by(StoryRating.rating.desc()).all()
+
 code.interact(local=globals()) 
+
