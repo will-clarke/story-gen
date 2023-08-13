@@ -54,6 +54,8 @@ class StoryRating(Base):
 
     rating_type: Mapped[str] = mapped_column(String, primary_key=True)
     rating: Mapped[int] = mapped_column(Integer, primary_key=True)
+    prompt: Mapped[str] = mapped_column(String)
+    model_name: Mapped[str] = mapped_column(String)
     story: Mapped["Story"] = relationship("Story", back_populates="ratings")
 
     def __repr__(self):

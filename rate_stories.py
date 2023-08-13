@@ -28,19 +28,34 @@ rating_criteria= [
         "interesting",
         ]
 prompt = PromptTemplate.from_template("""
-The following is a story. It is called "{title}".
-Please rate how good you think it is on a scale of 1 to 10, where 1 is the worst and 10 is the best.
+The following is a short story demarked with <<<<<< and >>>>>>s. 
+
+The short story is called "{title}", and aims to have the following categories: {categories}.
+
+Please rate how good you think it is on a scale of 1 to 100, where 1 is the worst and 100 is the best.
+Output format should be the number out of 100, followed by a colon and a single sentence reason for the rating.
+
+Examples:
+34/100: The story is not coherent and the writing style is poor.
+79/100: Interesting sci-fic concepts and some decent character development.
+
 Take into account the following criteria:
 - Originality
+- Coherence
 - Interest
-- How well it fits the genres ({genres})
-- How well it fits the tones ({tones})
+- How well it fits the categories ({categories})
 - General writing style
 - Consistency
 
+<<<<<<<
 {story}
+>>>>>>>
 
+
+Rating:
 """)
+
+
 
 model_name = "./models/llama-2-7b-chat-ggml.bin"
 model_name = "TheBloke/Llama-2-7B-Chat-GGML"
@@ -56,15 +71,35 @@ chain = LLMChain(
     prompt=prompt,
 )
 
-
-
 def rate_story(story: Story):
-    pass
+    f = prompt.format(
+        title=story.title,
+        categories=", ".join([c.category for c in story.categories]),
+        story=story.text
+)
+
+    out = chain.run(
+        title=story.title,
+        categories=", ".join([c.category for c in story.categories]),
+        story=story.text
+    )
 
 
+    rating = out.split("\n")[-1]
 
+    r = StoryRating(
+        story_id=story.id,
+        rating_type="overallv1",
+        rating=rating,
+        prompt=prompt,
+        model_name=model_name,
+        )
+
+    story.ratings.append(r)
+    session.add(r)
+    session.commit()
 
 if __name__ == "__main__":
-    stories_with_no_categories = session.query(Story).filter(~Story.categories.any()).all()
-    for s in stories_with_no_categories:
+    stories_with_no_ratings = session.query(Story).filter(~Story.ratings.any()).limit(1).all()
+    for s in stories_with_no_ratings:
         rate_story(s)
