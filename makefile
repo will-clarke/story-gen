@@ -1,4 +1,4 @@
 all: dev
 
 dev:
-	python3 run.py
+	flask run --debug

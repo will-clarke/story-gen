@@ -1,15 +1,36 @@
 import db
 import re
 from typing import Tuple
-import random
 from langchain.llms import CTransformers
-from langchain.prompts import  PromptTemplate
+from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
 from models import Story, StoryCategory, StoryRating
 
-potential_genres = ["hisorical", "fantasy", "romantic", "suspense", "sci-fi", "noir", "adventure", "comedy", "mystery", "fantasy", "romance"]
-potential_tones = ["eerie", "suspense", "joyful", "celebration", "melancholic", "reflective", "funny", "comedy", "tense"]
+potential_genres = [
+    "hisorical",
+    "fantasy",
+    "romantic",
+    "suspense",
+    "sci-fi",
+    "noir",
+    "adventure",
+    "comedy",
+    "mystery",
+    "fantasy",
+    "romance",
+]
+potential_tones = [
+    "eerie",
+    "suspense",
+    "joyful",
+    "celebration",
+    "melancholic",
+    "reflective",
+    "funny",
+    "comedy",
+    "tense",
+]
 
 engine = db.setup()
 session = Session(engine)
@@ -22,14 +43,15 @@ session = Session(engine)
 # print(s)
 
 
-rating_criteria= [
-        "originality",
-        "close to genres",
-        "close to tones",
-        "generally good",
-        "interesting",
-        ]
-prompt = PromptTemplate.from_template("""
+rating_criteria = [
+    "originality",
+    "close to genres",
+    "close to tones",
+    "generally good",
+    "interesting",
+]
+prompt = PromptTemplate.from_template(
+    """
 The following is a short story demarked with <<<<<< and >>>>>>s. 
 
 The short story is called "{title}", and aims to have the following categories: {categories}.
@@ -55,23 +77,20 @@ Take into account the following criteria:
 
 
 Rating:
-""")
-
+"""
+)
 
 
 model_name = "./models/llama-2-7b-chat-ggml.bin"
 model_name = "TheBloke/Llama-2-7B-Chat-GGML"
 
-llm = CTransformers(
-    model=model_name,
-    model_type="llama",
-    client=None
-)
+llm = CTransformers(model=model_name, model_type="llama", client=None)
 
 chain = LLMChain(
     llm=llm,
     prompt=prompt,
 )
+
 
 def extract_rating(out: str) -> Tuple[int, str]:
     out = out.strip()
@@ -85,17 +104,18 @@ def extract_rating(out: str) -> Tuple[int, str]:
     out = re.sub(r"\d+/100[\.\s:]?", "", out)
     return int(rating), out
 
+
 def rate_story(story: Story):
     f = prompt.format(
         title=story.title,
         categories=", ".join([c.category for c in story.categories]),
-        story=story.title
-)
+        story=story.title,
+    )
 
     out = chain.run(
         title=story.title,
         categories=", ".join([c.category for c in story.categories]),
-        story=story.title
+        story=story.title,
     )
 
     rating, out = extract_rating(out)
@@ -107,11 +127,12 @@ def rate_story(story: Story):
         prompt=f,
         model_output=out,
         model_name=model_name,
-        )
+    )
 
     story.ratings.append(r)
     session.add(r)
     session.commit()
+
 
 if __name__ == "__main__":
     stories_with_no_ratings = session.query(Story).filter(~Story.ratings.any()).all()
