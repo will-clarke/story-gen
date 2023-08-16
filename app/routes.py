@@ -1,5 +1,6 @@
-from app import app
-# from flask import render_template, request, redirect, url_for
+from . import app
+
+from flask import render_template
 
 
 # from . import db
@@ -11,10 +12,22 @@ print("hey")
 
 @app.route('/')
 def index():
-    print("yoooooooooooooooooo")
-    s = Story.query.all()
-    print("s: ", s)
-    return "heyy" + str(len(s)) + "stories in the database"
+    # print("yoooooooooooooooooo")
+    # s = Story.query.all()
+    # print("s: ", s)
+    return render_template('index.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/story/<int:id>')
+def story(id):
+    story = Story.query.filter_by(id=id).first()
+    return render_template('story.html', story=story)
+
 
 # class User(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
