@@ -27,6 +27,7 @@ numpy==1.25.2
 openapi-schema-pydantic==1.2.4
 packaging==23.1
 psycopg2==2.9.7
+psycopg2-binary==2.9.7
 pydantic==1.10.12
 PyYAML==6.0.1
 requests==2.31.0
