@@ -9,10 +9,12 @@ TODOs
 - [ ] tags
 - [ ] allow human votes
 - [ ] scrape reddit short stories / two sentence horror
-- [ ] think of awesome monetisation ideas
 - [ ] fine-tune?!
 - [ ] use own model?!
 - [ ] learn more about models
+- [ ] log in / bot detection?
+- [ ] prometheus metrics or something. Grafana?!?!
+- [ ] think of awesome monetisation ideas
 
 ## Dev tips
 
