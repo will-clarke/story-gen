@@ -1,3 +1,19 @@
+## Short stories
+
+TODOs
+- [ ] get migrations working properly
+- [ ] make the website look half decent
+- [ ] stories page 
+- [ ] stories page with lots of search-param filters. eg. tones, themes, votes
+- [ ] sort by AI votes
+- [ ] tags
+- [ ] allow human votes
+- [ ] scrape reddit short stories / two sentence horror
+- [ ] think of awesome monetisation ideas
+- [ ] fine-tune?!
+- [ ] use own model?!
+- [ ] learn more about models
+
 ## Dev tips
 
 ### Cool models:
