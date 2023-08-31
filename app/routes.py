@@ -4,29 +4,26 @@ from flask import render_template
 
 
 # from . import db
-from .models.models import Story # StoryCategory, StoryRating
+from .models import Story  # StoryCategory, StoryRating
 
 
-print("hey")
-
-
-@app.route('/')
+@app.route("/")
 def index():
     # print("yoooooooooooooooooo")
     # s = Story.query.all()
     # print("s: ", s)
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-@app.route('/about')
+@app.route("/about")
 def about():
-    return render_template('about.html')
+    return render_template("about.html")
 
 
-@app.route('/story/<int:id>')
+@app.route("/story/<int:id>")
 def story(id):
     story = Story.query.filter_by(id=id).first()
-    return render_template('story.html', story=story)
+    return render_template("story.html", story=story)
 
 
 # class User(db.Model):
@@ -34,10 +31,18 @@ def story(id):
 #     name = db.Column(db.String(128))
 #     username = db.Column(db.String(128))
 
-# @app.route("/users")
-# def user_list():
-#     users = db.session.execute(db.select(User).order_by(User.username)).scalars()
-#     return render_template("user/list.html", users=users)
+
+@app.route("/random-story")
+def random_story():
+    s = Story.get_random()
+    return render_template("story.html", story=s)
+
+
+@app.route("/users")
+def user_list():
+    users = db.session.execute(db.select(User).order_by(User.username)).scalars()
+    return render_template("user/list.html", users=users)
+
 
 # @app.route("/users/create", methods=["GET", "POST"])
 # def user_create():

@@ -4,16 +4,13 @@ import re
 
 from . import db
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import func
 
 
 class Story(db.Model):
     __tablename__ = "stories"
 
-    id: uuid.UUID = db.Column(
-        UUID(as_uuid=True),
-        primary_key=True,
-        default=uuid.uuid4
-    )
+    id: uuid.UUID = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title: str = db.Column(db.String)
     text: str = db.Column(db.String)
     prompt: str = db.Column(db.String)
@@ -35,10 +32,14 @@ class Story(db.Model):
 
     def __repr__(self):
         title_long_enough = self.title and len(self.title) >= 40
-        text_preview = (self.title[:40] if title_long_enough else self.title)
+        text_preview = self.title[:40] if title_long_enough else self.title
         text_preview.replace("\n", " ")
         text_preview = re.sub(r"\s+", " ", text_preview)
         return f"Story({text_preview})\n"
+
+    @staticmethod
+    def get_random():
+        return Story.query.order_by(func.random()).first()
 
 
 class StoryCategory(db.Model):

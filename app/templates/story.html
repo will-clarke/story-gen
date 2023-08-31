@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Stories</title>
+</head>
+
+<body>
+  <h1>{{ story.title }}</h1>
+
+  <p>
+    {{ story.text }}
+  </p>
+
+  {% if story.ratings|length > 0 %}
+    <h4>Ratings</h4>
+    {% for rating in story.ratings %}
+      {{ rating}}
+    {% endfor %}
+  {% endif %}
+
+  {% if story.categories|length > 0 %}
+    <h4>Categories</h4>
+    {% for category in story.categories %}
+      {{ category }}
+    {% endfor %}
+  {% endif %}
+
+
+</body>
+
+</html>
