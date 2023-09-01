@@ -1,4 +1,6 @@
-from app import app
+import app as app_module
+from app import application
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app_module.register_routes(application)
+    application.run(host="0.0.0.0", debug=True)

@@ -6,7 +6,6 @@ from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
 from app.models import Story, StoryCategory, StoryRating
 
-
 potential_genres = [
     "hisorical",
     "fantasy",

@@ -1,13 +1,17 @@
-from . import app
+# from . import app
 
 from flask import render_template
 
+from flask import Blueprint
+
+bp = Blueprint("main", __name__)
+
 
 # from . import db
-from . import Story  # StoryCategory, StoryRating
+from .models import Story  # StoryCategory, StoryRating
 
 
-@app.route("/")
+@bp.route("/")
 def index():
     # print("yoooooooooooooooooo")
     # s = Story.query.all()
@@ -15,12 +19,12 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/about")
+@bp.route("/about")
 def about():
     return render_template("about.html")
 
 
-@app.route("/story/<int:id>")
+@bp.route("/story/<int:id>")
 def story(id):
     story = Story.query.filter_by(id=id).first()
     return render_template("story.html", story=story)
@@ -32,13 +36,13 @@ def story(id):
 #     username = db.Column(db.String(128))
 
 
-@app.route("/random-story")
+@bp.route("/random-story")
 def random_story():
     s = Story.get_random()
     return render_template("story.html", story=s)
 
 
-@app.route("/users")
+@bp.route("/users")
 def user_list():
     users = db.session.execute(db.select(User).order_by(User.username)).scalars()
     return render_template("user/list.html", users=users)
