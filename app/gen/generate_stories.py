@@ -1,10 +1,10 @@
-import db
+from app import db
 import random
 from langchain.llms import CTransformers
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
-from ... import Story, StoryCategory, StoryRating
+from app.models import Story, StoryCategory, StoryRating
 
 
 potential_genres = [

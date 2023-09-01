@@ -4,7 +4,7 @@ from flask import render_template
 
 
 # from . import db
-from .models import Story  # StoryCategory, StoryRating
+from . import Story  # StoryCategory, StoryRating
 
 
 @app.route("/")
