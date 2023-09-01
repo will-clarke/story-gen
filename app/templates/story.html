@@ -14,17 +14,25 @@
 
   {% if story.ratings|length > 0 %}
     <h4>Ratings</h4>
+    <ul>
     {% for rating in story.ratings %}
-      {{ rating}}
+      <li>{{ rating}}</li>
     {% endfor %}
+    </ul>
   {% endif %}
 
   {% if story.categories|length > 0 %}
     <h4>Categories</h4>
+    <ul>
     {% for category in story.categories %}
-      {{ category }}
+      <li>{{ category }}<li>
     {% endfor %}
+    <ul>
   {% endif %}
+
+
+  <br/>
+  Proposed Length: {{ story.length }}
 
 
 </body>
