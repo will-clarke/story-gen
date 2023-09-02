@@ -14,3 +14,6 @@ ssh:
 
 generate-stories:
 	python3 -m stories_app.gen.generate_stories
+
+rate-stories:
+	python3 -m stories_app.gen.rate_stories

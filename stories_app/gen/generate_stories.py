@@ -104,10 +104,10 @@ def process(genres, tones, length):
 if __name__ == "__main__":
     for i in range(0, 100000):
         genres = [
-            random.choice(potential_genres) for _ in range(0, random.randint(1, 5))
+            random.choice(potential_genres) for _ in range(0, random.randint(1, 3))
         ]
         genres = list(set(genres))
-        tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 5))]
+        tones = [random.choice(potential_tones) for _ in range(0, random.randint(1, 3))]
         tones = list(set(tones))
         length = random.choice(["10", "50", "100", "200", "500", "1000", "2000"])
         process(genres, tones, length)

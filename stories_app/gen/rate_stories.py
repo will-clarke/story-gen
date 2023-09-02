@@ -1,11 +1,12 @@
-import db
+from stories_app.db import db
+from stories_app.app import create_app
 import re
 from typing import Tuple
 from langchain.llms import CTransformers
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
-from models import Story, StoryCategory, StoryRating
+from stories_app.models import Story, StoryCategory, StoryRating
 
 potential_genres = [
     "hisorical",
@@ -32,9 +33,9 @@ potential_tones = [
     "tense",
 ]
 
-engine = db.setup()
-session = Session(engine)
-
+app = create_app()
+app.app_context().push()
+session = db.session
 
 # s = session.query(Story).limit(10).all()
 # print(s)
