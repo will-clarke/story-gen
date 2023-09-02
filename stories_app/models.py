@@ -6,7 +6,7 @@ import uuid
 import re
 
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import func
+from sqlalchemy import desc, func
 
 
 class Story(db.Model):
@@ -42,6 +42,14 @@ class Story(db.Model):
     @staticmethod
     def get_random():
         return Story.query.order_by(func.random()).first()
+
+    @staticmethod
+    def first():
+        return Story.query.order_by("update_at").first()
+
+    @staticmethod
+    def last():
+        return Story.query.order_by(desc("update_at")).first()
 
 
 class StoryCategory(db.Model):

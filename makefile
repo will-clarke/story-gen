@@ -3,6 +3,9 @@ all: dev
 dev:
 	flask run --debug
 
+shell:
+	flask shell
+
 deploy:
 	ssh -t will@161.35.40.10 "cd story-gen; git pull"
 

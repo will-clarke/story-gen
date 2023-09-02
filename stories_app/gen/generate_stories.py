@@ -5,6 +5,8 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
 from stories_app.models import Story, StoryCategory, StoryRating
+from stories_app.app import create_app
+
 
 potential_genres = [
     "hisorical",
@@ -32,9 +34,11 @@ potential_tones = [
 ]
 
 
+app = create_app()
+
+app.app_context().push()
+
 session = db.session
-# engine = db.setup()
-# session = Session(engine)
 
 prompt = PromptTemplate.from_template(
     """
