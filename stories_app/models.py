@@ -18,7 +18,7 @@ class Story(db.Model):
     prompt: str = db.Column(db.String)
     length: int = db.Column(db.Integer)
     model_name: str = db.Column(db.String)
-    update_at: datetime.datetime = db.Column(
+    updated_at: datetime.datetime = db.Column(
         db.DateTime, default=datetime.datetime.utcnow
     )
     created_at: datetime.datetime = db.Column(
@@ -45,11 +45,11 @@ class Story(db.Model):
 
     @staticmethod
     def first():
-        return Story.query.order_by("update_at").first()
+        return Story.query.order_by("updated_at").first()
 
     @staticmethod
     def last():
-        return Story.query.order_by(desc("update_at")).first()
+        return Story.query.order_by(desc("updated_at")).first()
 
 
 class StoryCategory(db.Model):
@@ -78,6 +78,21 @@ class StoryRating(db.Model):
     model_name: str = db.Column(db.String)
     model_output: str = db.Column(db.String, default="")
     story = db.relationship("Story", back_populates="ratings")
+    updated_at: datetime.datetime = db.Column(
+        db.DateTime, default=datetime.datetime.utcnow
+    )
 
     def __repr__(self):
         return f"({self.rating_type}: {self.rating})\n"
+
+    @staticmethod
+    def get_random():
+        return StoryRating.query.order_by(func.random()).first()
+
+    @staticmethod
+    def first():
+        return StoryRating.query.order_by("updated_at").first()
+
+    @staticmethod
+    def last():
+        return StoryRating.query.order_by(desc("updated_at")).first()
