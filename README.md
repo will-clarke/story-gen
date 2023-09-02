@@ -18,6 +18,13 @@ TODOs
 
 ## Dev tips
 
+```
+flask db check
+flask db migrate -m 'message'
+flask db upgrade
+flask db history
+```
+
 ### Cool models:
 
 - TheBloke/Llama-2-7B-Chat-GGML
