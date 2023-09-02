@@ -1,10 +1,10 @@
-from app import db
+from stories_app.db import db
 import random
 from langchain.llms import CTransformers
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from sqlalchemy.orm import Session
-from app.models import Story, StoryCategory, StoryRating
+from stories_app.models import Story, StoryCategory, StoryRating
 
 potential_genres = [
     "hisorical",
@@ -31,8 +31,10 @@ potential_tones = [
     "tense",
 ]
 
-engine = db.setup()
-session = Session(engine)
+
+session = db.session
+# engine = db.setup()
+# session = Session(engine)
 
 prompt = PromptTemplate.from_template(
     """

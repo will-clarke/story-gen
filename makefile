@@ -8,3 +8,6 @@ deploy:
 
 ssh:
 	ssh -t will@161.35.40.10
+
+generate-stories:
+	python3 -m stories_app.gen.generate_stories
