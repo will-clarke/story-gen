@@ -1,10 +1,25 @@
+from flask import Flask, render_template
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+
+# from .models import Story, StoryCategory, StoryRating
+
+
 import datetime
 import uuid
 import re
 
-from app import db
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import func
+
+app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///stories"
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 class Story(db.Model):
@@ -71,3 +86,33 @@ class StoryRating(db.Model):
 
     def __repr__(self):
         return f"({self.rating_type}: {self.rating})\n"
+
+
+# from . import app
+
+from flask import render_template
+
+
+@app.route("/")
+def index():
+    # print("yoooooooooooooooooo")
+    # s = Story.query.all()
+    # print("s: ", s)
+    return render_template("index.html")
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/story/<int:id>")
+def story(id):
+    story = Story.query.filter_by(id=id).first()
+    return render_template("story.html", story=story)
+
+
+@app.route("/random-story")
+def random_story():
+    s = Story.get_random()
+    return render_template("story.html", story=s)
