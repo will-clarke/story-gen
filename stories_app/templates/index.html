@@ -1,18 +1,30 @@
 {% extends "layout.html" %}
-
 {% block body %}
-<div class="container title">
-  <h2>AI-generated short stories</h2>
-  <ul>
-    <li>
-  <a href="{{ url_for('stories.about') }}">About Us</a>
-    </li>
-    <li>
-  <a href="{{ url_for('stories.random_story') }}">Random story</a>
-    </li>
-    <li>
-  <a href="/">Index <i class="fa fa-caret-right"></i></a>
-    </li>
+    <div class="container title">
+        <h1>AI-generated short stories</h1>
+    </div>
+    <ul>
+        <li>
+            <a href="{{ url_for("stories.about") }}">About Us</a>
+        </li>
+        <li>
+            <a href="{{ url_for("stories.random_story") }}">Random story</a>
+        </li>
+        <li>
+            <a href="/">Index <i class="fa fa-caret-right"></i></a>
+        </li>
     </ul>
-</div>
+    <br/>
+    <container>
+      <h2>Top rated stories</h2>
+        <ul>
+            {% for story in top_rated %}
+                <li>
+                    <a href="{{ url_for('stories.story', id=story.id) }}">
+                        <strong>{{ story.average_rating() |int }}%</strong> - {{ story.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </container>
 {% endblock %}

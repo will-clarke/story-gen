@@ -39,6 +39,13 @@ class Story(db.Model):
         text_preview = re.sub(r"\s+", " ", text_preview)
         return f"Story({text_preview})\n"
 
+    def average_rating(self):
+        return (
+            db.session.query(func.avg(StoryRating.rating))
+            .filter_by(story_id=self.id)
+            .scalar()
+        )
+
     @staticmethod
     def get_random():
         return Story.query.order_by(func.random()).first()

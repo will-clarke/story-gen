@@ -24,8 +24,7 @@ section {
     padding: 20px; /* Add some padding for spacing */
 }
 
-/* Style for the article */
-article {
+.story {
     width: 70%; /* Set the article's width to 70% */
     float: left; /* Float it to the left to make room for the aside */
 }
