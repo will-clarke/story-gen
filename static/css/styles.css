@@ -1,0 +1,44 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set a clear font and default font size */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Apply a background color and text color */
+body {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Add spacing to headings and paragraphs */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+/* Center content horizontally and vertically */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Add responsive design using a media query */
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+  .container {
+    padding: 20px;
+  }
+}

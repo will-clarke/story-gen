@@ -17,3 +17,9 @@ generate-stories:
 
 rate-stories:
 	python3 -m stories_app.gen.rate_stories
+
+# generate-stories-mac:
+# 	caffeinate -i "python3 -m stories_app.gen.generate_stories"
+
+# rate-stories-mac:
+# 	caffeinate -i "python3 -m stories_app.gen.rate_stories"
