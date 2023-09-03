@@ -51,6 +51,16 @@ class Story(db.Model):
     def last():
         return Story.query.order_by(desc("updated_at")).first()
 
+    @staticmethod
+    def top_rated():
+        return (
+            db.session.query(Story)
+            .join(StoryRating, StoryRating.story_id == Story.id)
+            .group_by(Story.id)
+            .order_by(db.func.avg(StoryRating.rating).desc())
+            .all()
+        )
+
 
 class StoryCategory(db.Model):
     __tablename__ = "story_categories"
