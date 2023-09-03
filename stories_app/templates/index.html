@@ -1,14 +1,18 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<div class="container">
-
-  <br/>
-  I'm in index.html
-  <br/>
+<div class="container title">
+  <h2>AI-generated short stories</h2>
+  <ul>
+    <li>
   <a href="{{ url_for('stories.about') }}">About Us</a>
+    </li>
+    <li>
   <a href="{{ url_for('stories.random_story') }}">Random story</a>
+    </li>
+    <li>
   <a href="/">Index <i class="fa fa-caret-right"></i></a>
-  </p>
+    </li>
+    </ul>
 </div>
 {% endblock %}

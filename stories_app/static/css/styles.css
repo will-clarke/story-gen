@@ -14,11 +14,52 @@ body {
 
 /* Add spacing to headings and paragraphs */
 h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-p {
-  margin-bottom: 10px;
+section {
+    position: relative; /* Ensure relative positioning for absolute child */
+    width: 100%; /* Set the section's width */
+    margin: 0 auto; /* Center the section horizontally */
+    padding: 20px; /* Add some padding for spacing */
+}
+
+/* Style for the article */
+article {
+    width: 70%; /* Set the article's width to 70% */
+    float: left; /* Float it to the left to make room for the aside */
+}
+
+/* Style for the aside */
+aside {
+    position: absolute; /* Absolute positioning relative to the section */
+    top: 0; /* Align the top of the aside with the section */
+    right: 0; /* Align the right of the aside with the section */
+    width: 30%; /* Set the aside's width to 30% */
+    background-color: #f0f0f0; /* Add a background color for visibility */
+    padding: 20px; /* Add some padding for content spacing */
+}
+
+/* aside { */
+/*   width: 30%; */
+/*   padding-left: 15px; */
+/*   margin-left: 15px; */
+/*   float: right; */
+/*   font-style: italic; */
+/*   background-color: lightgray; */
+/* } */
+
+/* p { */
+/*   margin-bottom: 10px; */
+/* } */
+
+.title {
+  text-align: center;
+  padding: 3em;
+}
+
+.title ul {
+  list-style-type: none;
 }
 
 .container {

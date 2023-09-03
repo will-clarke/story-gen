@@ -1,40 +1,42 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Stories</title>
-</head>
 
-<body>
+{% block title %}
+<title>📚ShortStories📚 - {{story.title}}</title>
+{% endblock %}
+
+{% block body %}
+<div class="container title">
   <h1>{{ story.title }}</h1>
+</div>
 
-  <p>
-    {{ story.text }}
-  </p>
 
-  {% if story.ratings|length > 0 %}
-    <h4>Ratings</h4>
-    <ul>
+<section>
+<article>
+  {{ story.text }}
+</article>
+
+<aside>
+{% if story.ratings|length > 0 %}
+  <h4>Ratings</h4>
+  <ul>
     {% for rating in story.ratings %}
-      <li>{{ rating}}</li>
+    <li>{{ rating}}</li>
     {% endfor %}
-    </ul>
-  {% endif %}
+  </ul>
+{% endif %}
 
-  {% if story.categories|length > 0 %}
-    <h4>Categories</h4>
-    <ul>
-    {% for category in story.categories %}
-      <li>{{ category }}<li>
-    {% endfor %}
-    <ul>
-  {% endif %}
+{% if story.categories|length > 0 %}
+  <h4>Categories</h4>
+  <ul>
+  {% for category in story.categories %}
+    <li>{{ category }}</li>
+  {% endfor %}
+  <ul>
+{% endif %}
 
+<h4>Proposed Length: {{ story.length }}<h4>
 
-  <br/>
-  Proposed Length: {{ story.length }}
-
-
-</body>
-
-</html>
+</aside>
+</section>
+{% endblock %}
