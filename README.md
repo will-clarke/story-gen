@@ -1,6 +1,7 @@
 ## Short stories
 
 TODOs
+- [ ] analytics!
 - [ ] get migrations working properly
 - [ ] make the website look half decent
 - [ ] stories page 
