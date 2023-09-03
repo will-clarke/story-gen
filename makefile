@@ -8,6 +8,7 @@ shell:
 
 deploy:
 	ssh -t will@161.35.40.10 "cd story-gen; git pull"
+	ssh -t will@161.35.40.10 "sudo systemctl restart stories"
 
 ssh:
 	ssh -t will@161.35.40.10
