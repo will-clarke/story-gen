@@ -40,6 +40,15 @@ aside {
     padding: 20px; /* Add some padding for content spacing */
 }
 
+
+@media (max-width: 768px) {
+  article, aside {
+      width: 100%; /* On small screens, make both the article and aside take the full width */
+      float: none; /* Remove floating */
+      position: static;
+  }
+}
+
 /* aside { */
 /*   width: 30%; */
 /*   padding-left: 15px; */
