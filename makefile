@@ -3,6 +3,9 @@ all: dev
 dev:
 	flask run --debug
 
+psql:
+	psql postgresql://will@161.35.40.10:5432/stories
+
 shell:
 	flask shell
 
