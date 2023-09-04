@@ -10,7 +10,12 @@ def create_app():
 
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///stories"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///stories"
+
+    # set PGPASSWORD
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = "postgresql://will@161.35.40.10:5432/stories"
     db.init_app(app)
     _ = Migrate(app, db)
 
