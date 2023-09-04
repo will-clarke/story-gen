@@ -82,8 +82,7 @@ Rating:
 )
 
 
-model_name = "./models/llama-2-7b-chat-ggml.bin"
-model_name = "TheBloke/Llama-2-7B-Chat-GGML"
+model_name = "TheBloke/Llama-2-13B-Chat-GGML"
 
 llm = CTransformers(model=model_name, model_type="llama", client=None)
 
