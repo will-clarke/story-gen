@@ -6,6 +6,9 @@ dev:
 psql:
 	psql postgresql://will@161.35.40.10:5432/stories
 
+psql-backup:
+	pg_dump postgresql://will@161.35.40.10:5432/stories > stories.db.bak
+
 shell:
 	flask shell
 
