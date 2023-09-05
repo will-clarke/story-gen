@@ -36,6 +36,7 @@ for submission in subreddit_top:
 
     session.add(r)
     session.commit()
+    print(submission.title)
 
 
 print(reddit_read_only.auth.limits)
