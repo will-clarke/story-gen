@@ -1,5 +1,8 @@
 all: dev
 
+script-scrape-reddit:
+	python3 -m stories_app.scripts.scrape_reddit
+
 dev:
 	flask run --debug
 
