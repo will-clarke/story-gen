@@ -35,7 +35,6 @@ potential_tones = [
 
 
 app = create_app()
-
 app.app_context().push()
 
 session = db.session

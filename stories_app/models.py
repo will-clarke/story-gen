@@ -118,7 +118,7 @@ class StoryRating(db.Model):
 class DataReddit(db.Model):
     __tablename__ = "data_reddit"
 
-    id: uuid.UUID = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id: str = db.Column(db.String, primary_key=True)
     url: str = db.Column(db.String)
     title: str = db.Column(db.String)
     text: str = db.Column(db.String)
