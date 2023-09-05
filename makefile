@@ -25,10 +25,10 @@ generate-stories:
 rate-stories:
 	python3 -m stories_app.gen.rate_stories
 
-copy-db:
-	pg_dump --data-only -d stories > tmp.db
+copy-db: psql-backup
+	pg_dump --data-only --inserts -d stories > tmp.db
 	scp tmp.db will@161.35.40.10:/home/will/tmp.db
-	ssh -t will@161.35.40.10 "cd story-gen; psql -d stories -f tmp.db"
+	ssh -t will@161.35.40.10 "psql -d stories -f tmp.db"
 	# may want to delete the data in the dbs first
 
 generate-stories-mac:
