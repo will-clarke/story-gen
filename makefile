@@ -8,6 +8,9 @@ setup:
 	pip install -r requirements.txt
 	flask db upgrade
 
+metrics:
+	ssh will@161.35.40.10 'zcat -f /var/log/nginx/access.log*' | goaccess --log-format=COMBINED
+
 dev:
 	flask run --debug
 
