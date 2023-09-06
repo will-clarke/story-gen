@@ -22,10 +22,12 @@ session = db.session
 subreddit = reddit_read_only.subreddit("shortstories")
 
 # last datareddit id
-last_id = session.query(DataReddit).order_by(desc(DataReddit.updated_at)).first().id
-subreddit_top = subreddit.top(
-    time_filter="all", limit=2, params={"after": "t3_" + last_id}
-)
+last = session.query(DataReddit).order_by(desc(DataReddit.updated_at)).first()
+last_id = None
+if last:
+    last_id = "t3_" + last.id
+
+subreddit_top = subreddit.top(time_filter="all", limit=2, params={"after": last_id})
 
 data = []
 
