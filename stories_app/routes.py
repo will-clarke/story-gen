@@ -6,7 +6,6 @@ from stories_app.models import Story
 
 
 from prometheus_client import Counter, Histogram, generate_latest, REGISTRY
-from prometheus_client.exposition import make_wsgi_app
 
 routes = []
 
@@ -47,3 +46,8 @@ def random_story():
     requests_total.inc()
     s = Story.get_random()
     return render_template("story.html", story=s)
+
+
+@bp.route("/metrics")
+def metrics():
+    return generate_latest(REGISTRY)
