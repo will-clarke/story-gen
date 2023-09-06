@@ -1,6 +1,5 @@
 import praw
 import time
-import pandas as pd
 
 from stories_app.scripts.util import get_password
 from stories_app.app import create_app
@@ -41,13 +40,6 @@ for submission in subreddit_top:
         top_comment=top_comment,
     )
 
-    # data = {"PostID": [], "Title": [], "Text": [], "Auther": [], "Comments": []}
-    # df = pd.DataFrame(data)
-
-    # name_dict = {"Name": ["a", "b", "c", "d"], "Score": [90, 80, 95, 20]}
-    # df = pd.DataFrame(name_dict)
-
-    # df.to_csv("file_name.csv")
     try:
         session.add(r)
         session.commit()
