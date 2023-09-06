@@ -3,6 +3,11 @@ all: dev
 script-scrape-reddit:
 	python3 -m stories_app.scripts.scrape_reddit
 
+setup:
+	source venv/bin/activate.fish
+	pip install -r requirements.txt
+	flask db upgrade
+
 dev:
 	flask run --debug
 

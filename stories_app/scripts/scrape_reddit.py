@@ -5,6 +5,7 @@ from stories_app.scripts.util import get_password
 from stories_app.app import create_app
 from stories_app.models import DataReddit
 from stories_app.db import db
+from sqlalchemy import desc
 
 from sqlalchemy.exc import IntegrityError  # Import the IntegrityError exception
 
@@ -20,8 +21,11 @@ app.app_context().push()
 session = db.session
 subreddit = reddit_read_only.subreddit("shortstories")
 
-number_of_records_in_db = session.query(DataReddit).count()
-subreddit_top = subreddit.top(time_filter="all", limit=2, params={"after": "k28hhq"})
+# last datareddit id
+last_id = session.query(DataReddit).order_by(desc(DataReddit.updated_at)).first().id
+subreddit_top = subreddit.top(
+    time_filter="all", limit=2, params={"after": "t3_" + last_id}
+)
 
 data = []
 
