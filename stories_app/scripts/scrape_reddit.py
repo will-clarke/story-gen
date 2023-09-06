@@ -27,7 +27,7 @@ last_id = None
 if last:
     last_id = "t3_" + last.id
 
-subreddit_top = subreddit.top(time_filter="all", limit=2, params={"after": last_id})
+subreddit_top = subreddit.top(time_filter="all", limit=None, params={"after": last_id})
 
 data = []
 
