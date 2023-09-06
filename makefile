@@ -17,6 +17,7 @@ shell:
 
 deploy:
 	ssh -t will@161.35.40.10 "cd story-gen; git pull"
+	ssh -t will@161.35.40.10 "cd story-gen; pip install -r requirements.txt"
 	ssh -t will@161.35.40.10 "sudo systemctl restart stories"
 
 ssh:
