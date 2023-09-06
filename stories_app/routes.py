@@ -10,9 +10,9 @@ from prometheus_client.exposition import make_wsgi_app
 
 routes = []
 
-requests_total = Counter("myapp_requests_total", "Total HTTP Requests")
+requests_total = Counter("stories_requests_total", "Total HTTP Requests")
 request_duration = Histogram(
-    "myapp_request_duration_seconds", "Request latency in seconds"
+    "stories_request_duration_seconds", "Request latency in seconds"
 )
 
 
