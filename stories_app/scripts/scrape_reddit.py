@@ -21,7 +21,7 @@ session = db.session
 subreddit = reddit_read_only.subreddit("shortstories")
 
 number_of_records_in_db = session.query(DataReddit).count()
-subreddit_top = subreddit.top(limit=None, after=number_of_records_in_db)
+subreddit_top = subreddit.top(time_filter="all", limit=2, params={"after": "k28hhq"})
 
 data = []
 

@@ -1,6 +1,7 @@
 ## Short stories
 
 TODOs
+- [ ] improve prometheus metrics!
 - [ ] analytics!
 - [ ] stories page with lots of search-param filters. eg. tones, themes, votes
 - [ ] tags
@@ -10,8 +11,9 @@ TODOs
 - [ ] use own model?!
 - [ ] learn more about models
 - [ ] log in / bot detection?
-- [-] prometheus metrics or something. Grafana?!?!
+- [ ] Grafana???
 - [ ] think of awesome monetisation ideas
+- [X] prometheus metrics or something
 - [X] sort by AI votes
 - [X] get migrations working properly
 - [X] make the website look half decent
