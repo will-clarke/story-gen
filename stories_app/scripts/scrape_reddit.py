@@ -33,6 +33,7 @@ for submission in subreddit_top:
 
     r = DataReddit(
         id=submission.id,
+        subreddit=submission.subreddit.display_name,
         url=submission.url,
         title=submission.title,
         text=submission.selftext,

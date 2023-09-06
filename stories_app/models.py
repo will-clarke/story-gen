@@ -119,6 +119,7 @@ class DataReddit(db.Model):
     __tablename__ = "data_reddit"
 
     id: str = db.Column(db.String, primary_key=True)
+    subreddit: str = db.Column(db.String)
     url: str = db.Column(db.String)
     title: str = db.Column(db.String)
     text: str = db.Column(db.String)
