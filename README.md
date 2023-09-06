@@ -2,11 +2,7 @@
 
 TODOs
 - [ ] analytics!
-- [ ] get migrations working properly
-- [ ] make the website look half decent
-- [ ] stories page 
 - [ ] stories page with lots of search-param filters. eg. tones, themes, votes
-- [ ] sort by AI votes
 - [ ] tags
 - [ ] allow human votes
 - [ ] scrape reddit short stories / two sentence horror
@@ -14,8 +10,12 @@ TODOs
 - [ ] use own model?!
 - [ ] learn more about models
 - [ ] log in / bot detection?
-- [ ] prometheus metrics or something. Grafana?!?!
+- [-] prometheus metrics or something. Grafana?!?!
 - [ ] think of awesome monetisation ideas
+- [X] sort by AI votes
+- [X] get migrations working properly
+- [X] make the website look half decent
+- [X] stories page 
 
 ## Dev tips
 

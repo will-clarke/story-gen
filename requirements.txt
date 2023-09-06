@@ -34,6 +34,7 @@ packaging==23.1
 pandas==2.1.0
 praw==7.7.1
 prawcore==2.3.0
+prometheus-client==0.17.1
 psycopg2==2.9.7
 psycopg2-binary==2.9.7
 py-cpuinfo==9.0.0
