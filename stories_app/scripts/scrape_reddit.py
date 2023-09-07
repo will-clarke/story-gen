@@ -34,10 +34,6 @@ subreddit = reddit.subreddit("shortstories")
 
 # subreddit_top = subreddit.top(time_filter="all", limit=None, params={"after": last_id})
 
-# data = []
-
-# for submission in subreddit_top:
-
 
 def save_submission(submission: praw.models.Submission):
     if submission.comments:
@@ -66,7 +62,20 @@ def save_submission(submission: praw.models.Submission):
 
 
 while True:
-    random = subreddit.random()
-    save_submission(random)
-    time.sleep(3)
-    print(reddit.auth.limits)
+    subreddits = [
+        subreddit.controversial(limit=None),
+        subreddit.gilded(limit=None),
+        subreddit.hot(limit=None),
+        subreddit.new(limit=None),
+        subreddit.rising(limit=None),
+        subreddit.top(limit=None, time_filter="week"),
+        subreddit.top(limit=None, time_filter="year"),
+        subreddit.top(limit=None, time_filter="month"),
+        subreddit.hot(limit=None),
+    ]
+
+    for subreddit in subreddits:
+        for submission in subreddit:
+            save_submission(submission)
+            time.sleep(4)
+            print(reddit.auth.limits)
