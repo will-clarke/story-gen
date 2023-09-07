@@ -32,6 +32,7 @@ numpy==1.25.2
 openapi-schema-pydantic==1.2.4
 packaging==23.1
 pandas==2.1.0
+pmaw==3.0.0
 praw==7.7.1
 prawcore==2.3.0
 prometheus-client==0.17.1
