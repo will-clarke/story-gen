@@ -1,7 +1,6 @@
 from praw import Reddit
 import praw.models
 import time
-from pmaw import PushshiftAPI
 
 from stories_app.scripts.util import get_password
 from stories_app.app import create_app
@@ -12,8 +11,12 @@ from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError  # Import the IntegrityError exception
 
 reddit = Reddit(
-    client_id=get_password("justeat/reddit-api", r"client_id:\s*(\S+)"),
-    client_secret=get_password("justeat/reddit-api", r"client_secret:\s*(\S+)"),
+    client_id=get_password(
+        "REDDIT_CLIENT_ID", "justeat/reddit-api", r"client_id:\s*(\S+)"
+    ),
+    client_secret=get_password(
+        "REDDIT_CLIENT_SECRET", "justeat/reddit-api", r"client_secret:\s*(\S+)"
+    ),
     user_agent="short-stories-will",
 )
 
