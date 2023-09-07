@@ -68,5 +68,5 @@ def save_submission(submission: praw.models.Submission):
 while True:
     random = subreddit.random()
     save_submission(random)
-    time.sleep(8)
+    time.sleep(3)
     print(reddit.auth.limits)

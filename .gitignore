@@ -5,6 +5,9 @@ models/
 __pycache__/
 
 gen/stories.db.dump
+
 stories_app/static/report.html
+stories_app/data/
+
 venv
 llms
