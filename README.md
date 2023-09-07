@@ -1,6 +1,7 @@
 ## Short stories
 
 TODOs
+- [ ]  SSL
 - [ ] improve prometheus metrics!
 - [ ] analytics!
 - [ ] stories page with lots of search-param filters. eg. tones, themes, votes
