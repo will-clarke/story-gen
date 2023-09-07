@@ -3,6 +3,9 @@ all: dev
 script-scrape-reddit:
 	python3 -m stories_app.scripts.scrape_reddit
 
+script-reddit-to-csv:
+	python3 -m stories_app.scripts.reddit_to_csv
+
 setup:
 	source venv/bin/activate.fish
 	pip install -r requirements.txt
@@ -37,11 +40,10 @@ generate-stories:
 rate-stories:
 	python3 -m stories_app.gen.rate_stories
 
-copy-db: psql-backup
+copy-local-db-to-remote: psql-backup
 	pg_dump --data-only --inserts -d stories > tmp.db
 	scp tmp.db will@161.35.40.10:/home/will/tmp.db
-	ssh -t will@161.35.40.10 "psql -d stories -f tmp.db"
-	# may want to delete the data in the dbs first
+	# ssh -t will@161.35.40.10 "psql -d stories -f tmp.db"
 
 generate-stories-mac:
 	caffeinate python3 -m stories_app.gen.generate_stories
