@@ -17,6 +17,6 @@ def get_password(envvar: str, pass_entry: str, extract_pattern=None):
                 return match.group(1)
 
         return password
-    except subprocess.CalledProcessError as e:
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
         print(f"Error: {e}")
         return None
