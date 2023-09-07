@@ -15,5 +15,6 @@ allDataRedditVars = list(map(vars, allDataReddit))
 
 df = pd.DataFrame(allDataRedditVars)
 df = df.drop(columns=["_sa_instance_state"])
+df.to_csv("stories_app/data/data.csv", index=False)
 
 print(df.head())
