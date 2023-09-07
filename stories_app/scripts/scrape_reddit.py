@@ -1,5 +1,8 @@
 import praw
 import time
+from pmaw import PushshiftAPI
+
+api = PushshiftAPI()
 
 from stories_app.scripts.util import get_password
 from stories_app.app import create_app
@@ -9,17 +12,25 @@ from sqlalchemy import desc
 
 from sqlalchemy.exc import IntegrityError  # Import the IntegrityError exception
 
-reddit_read_only = praw.Reddit(
+reddit = praw.Reddit(
     client_id=get_password("justeat/reddit-api", r"client_id:\s*(\S+)"),
     client_secret=get_password("justeat/reddit-api", r"client_secret:\s*(\S+)"),
     user_agent="short-stories-will",
 )
 
 
+api_praw = PushshiftAPI(praw=reddit)
+
+comments = api_praw.search_comments(
+    q="quantum", subreddit="science", limit=100, until=1629990795
+)
+
+
 app = create_app()
 app.app_context().push()
 session = db.session
-subreddit = reddit_read_only.subreddit("shortstories")
+subreddit = reddit.subreddit("shortstories")
+
 
 # last datareddit id
 last = session.query(DataReddit).order_by(desc(DataReddit.updated_at)).first()
@@ -59,4 +70,4 @@ for submission in subreddit_top:
     print(submission.id + " -- " + submission.title)
 
 
-print(reddit_read_only.auth.limits)
+print(reddit.auth.limits)
