@@ -30,7 +30,7 @@
   <h4>Categories</h4>
   <ul>
   {% for category in story.categories %}
-    <li>{{ category }}</li>
+      <li> <a href="{{ url_for('stories.stories', categories=category.category) }}">{{ category }}</a></li>
   {% endfor %}
   <ul>
 {% endif %}
