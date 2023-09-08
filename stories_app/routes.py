@@ -90,10 +90,19 @@ def stories():
             )
 
     if ratings:
-        # Assuming ratings are passed as a list of integers separated by commas
-        rating_list = [int(rating) for rating in ratings.split(",")]
+
+        # if ratings includes a -, assume it's a range
+        if "-" in ratings:
+            low, high = ratings.split("-")
+            if low > high:
+                low, high = high, low  # Swap values to ensure low is the smallest
+            rating_list = [*range(int(low), int(high) + 1)]
+        else:
+            # Assuming ratings are passed as a list of integers separated by commas
+            rating_list = [int(rating) for rating in ratings.split(",")]
+        print("rating_list", rating_list)
         story_query = story_query.join(Story.ratings).filter(
-            StoryRating.value.in_(rating_list)
+            StoryRating.rating.in_(rating_list)
         )
 
     if title:
