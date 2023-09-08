@@ -129,14 +129,24 @@ def stories():
     for category in list(unique_categories):
         existing_query_params = request.args.copy()
         if param_name in existing_query_params:
+
+            existing_query_params[param_name] = (
+                existing_query_params[param_name] + "," + category
+            )
             # If it exists, append the new value to the existing value
-            existing_value = existing_query_params.getlist(param_name)
-            existing_value.append(category)
-            existing_query_params.setlist(param_name, existing_value)
+            # existing_value = existing_query_params.getlist(param_name)
+            # print("category", category)
+            # print("existing_value", existing_value)
+            # existing_value.append(category)
+
+            # print("existing_value", existing_value)
+            # existing_query_params.setlist(param_name, existing_value)
+            # print("existing_query_params", existing_query_params)
         else:
             # If it doesn't exist, add it with the new value
             existing_query_params[param_name] = category
         url = url_for("stories.stories", **existing_query_params)
+        print(url)
         categories.append((category, url))
 
         # Generate the updated URL with the modified query parameters
