@@ -1,5 +1,6 @@
 import time
-from flask import render_template, request
+from typing import List, Tuple
+from flask import render_template, request, url_for
 from flask import Blueprint
 from sqlalchemy import func, and_
 from datetime import datetime
@@ -116,7 +117,37 @@ def stories():
 
     stories = story_query.all()
 
-    return render_template("stories.html", stories=stories)
+    # FIXME: This is in memory and could probs be done in the db
+    param_name = "categories"
+    unique_categories = set()
+    for story in stories:
+        for category in story.categories:
+            unique_categories.add(category.category)
+    categories: List[
+        Tuple[str, str]
+    ] = []  # a list of "categories" - which involves a name and then a url
+    for category in list(unique_categories):
+        existing_query_params = request.args.copy()
+        if param_name in existing_query_params:
+            # If it exists, append the new value to the existing value
+            existing_value = existing_query_params.getlist(param_name)
+            existing_value.append(category)
+            existing_query_params.setlist(param_name, existing_value)
+        else:
+            # If it doesn't exist, add it with the new value
+            existing_query_params[param_name] = category
+        url = url_for("stories.stories", **existing_query_params)
+        categories.append((category, url))
+
+        # Generate the updated URL with the modified query parameters
+        # updated_url = url_for(request.endpoint, **existing_query_params)
+
+        # if "categories" in existing_query_params:
+        #     url = url.replace(existing_query_params["categories"], category)
+
+    return render_template(
+        "stories.html", stories=stories, categories=categories, url=url
+    )
 
 
 @bp.route("/random-story")
