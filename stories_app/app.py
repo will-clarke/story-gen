@@ -1,6 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask
 
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 
@@ -22,6 +21,3 @@ def create_app():
     app.register_blueprint(bp)
 
     return app
-
-
-# from . import app
