@@ -1,8 +1,9 @@
 import time
 from flask import render_template, request
 from flask import Blueprint
-from sqlalchemy import func
+from sqlalchemy import func, and_
 from datetime import datetime
+from sqlalchemy.orm import aliased
 
 from stories_app.models import Story, StoryCategory, StoryRating
 
@@ -63,6 +64,7 @@ def stories():
         per_page = int(per_page)
     else:
         per_page = 10
+    per_page = min(per_page, 200)
 
     # story = Story.query.paginate(page, per_page)
     story_query = Story.query
@@ -80,9 +82,12 @@ def stories():
     if categories:
         # Assuming categories are passed as a list of strings separated by commas
         category_list = categories.split(",")
-        story_query = story_query.join(Story.categories).filter(
-            StoryCategory.name.in_(category_list)
-        )
+
+        for category_name in category_list:
+            category_alias = aliased(StoryCategory)
+            story_query = story_query.join(category_alias, Story.categories).filter(
+                category_alias.category == category_name
+            )
 
     if ratings:
         # Assuming ratings are passed as a list of integers separated by commas

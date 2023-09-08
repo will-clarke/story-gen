@@ -75,7 +75,9 @@ class StoryCategory(db.Model):
         UUID(as_uuid=True), db.ForeignKey("stories.id"), primary_key=True
     )
 
+    # eg. tones
     category_type: str = db.Column(db.String, primary_key=True)
+    # eg. funny
     category: str = db.Column(db.String, primary_key=True)
     story = db.relationship("Story", back_populates="categories")
 
