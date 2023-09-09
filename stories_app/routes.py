@@ -101,7 +101,6 @@ def stories():
         else:
             # Assuming ratings are passed as a list of integers separated by commas
             rating_list = [int(rating) for rating in ratings.split(",")]
-        print("rating_list", rating_list)
         story_query = story_query.join(Story.ratings).filter(
             StoryRating.rating.in_(rating_list)
         )
@@ -118,7 +117,7 @@ def stories():
     stories = story_query.all()
 
     # FIXME: This is in memory and could probs be done in the db
-    param_name = "categories"
+    categories_param_name = "categories"
     unique_categories = set()
     for story in stories:
         for category in story.categories:
@@ -131,25 +130,31 @@ def stories():
     for category in list(unique_categories):
         category_is_applied_already = False
         existing_query_params = request.args.copy()
-        if param_name in existing_query_params:
-
+        if categories_param_name in existing_query_params:
             # remove the category if it exists and it gets clicked on
-            if category in existing_query_params[param_name]:
+            if category in existing_query_params[categories_param_name]:
                 category_is_applied_already = True
-                existing_query_params[param_name] = (
-                    existing_query_params[param_name]
+                existing_query_params[categories_param_name] = (
+                    existing_query_params[categories_param_name]
                     .replace(category, "")
                     .replace(",,", ",")
                     .strip(",")
                 )
+                if len(existing_query_params[categories_param_name]) == 0:
+                    del existing_query_params[categories_param_name]
             else:
-                # otherwise just add it
-                existing_query_params[param_name] = (
-                    existing_query_params[param_name] + "," + category
-                )
+                # ?category exists, but the specific category we're looking at (eg. 'funny') doesn't already exist on that line
+                if category == "":
+                    del existing_query_params[categories_param_name]
+                else:
+                    existing_query_params[categories_param_name] = (
+                        existing_query_params[categories_param_name] + "," + category
+                    )
+
         else:
-            # If it doesn't exist, add it with the new value
-            existing_query_params[param_name] = category
+            # If it ?categories doesn't exist, add it with the new value
+            existing_query_params[categories_param_name] = category
+
         url = url_for("stories.stories", **existing_query_params)
         categories.append((category, url, category_is_applied_already))
 
