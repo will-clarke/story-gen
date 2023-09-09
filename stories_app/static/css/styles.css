@@ -49,3 +49,12 @@ html {
             'main-content main-content right-sidebar'
     }
 }
+
+#hidden-content {
+  display: none;
+}
+
+/* Show the content when the checkbox is checked */
+#show-text:checked + #hidden-content {
+  display: block;
+}

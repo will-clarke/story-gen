@@ -35,8 +35,22 @@
       {% endif %}
 
       <h4>Proposed Length: {{ story.length }}<h4>
-      <h4>Model: {{ story.model_name }}</h4>
+          <h4>Model: <a href="{{ url_for('stories.stories', model_name=story.model_name) }}">{{ story.model_name }}</a></h4>
       <h4>Created At: {{ story.created_at }}</h4>
+
+
+
+    <label for="show-text">Click to see prompt:</label>
+    <input type="checkbox" id="show-text">
+    <div id="hidden-content">
+            <h4> Prompt </h4>
+            
+            
+            {{ story.prompt }}
+    </div>
+
+
+
     </section>
 </div>
 
