@@ -1,24 +1,30 @@
-## Short stories
+# ShortStories.lol
 
-TODOs
-- [ ]  SSL
-- [ ] improve prometheus metrics!
-- [ ] analytics!
-- [ ] stories page with lots of search-param filters. eg. tones, themes, votes
-- [ ] tags
-- [ ] allow human votes
+## In progress:
+
 - [ ] scrape reddit short stories / two sentence horror
+- [ ] learn more about models
+- [ ] SSL
+
+## TODOs:
+
+- [ ] improve prometheus metrics!
+- [ ] allow human votes
 - [ ] fine-tune?!
 - [ ] use own model?!
-- [ ] learn more about models
 - [ ] log in / bot detection?
 - [ ] Grafana???
 - [ ] think of awesome monetisation ideas
 - [X] prometheus metrics or something
+- [X] tags
+- [X] analytics!
 - [X] sort by AI votes
 - [X] get migrations working properly
 - [X] make the website look half decent
 - [X] stories page 
+- [X] stories page with lots of search-param filters. eg. tones, themes, votes
+
+## Stuff I should do at some point
 
 ## Dev tips
 
