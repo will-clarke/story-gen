@@ -1,5 +1,8 @@
 all: dev
 
+install:
+	pip install -r requirements.txt
+
 script-scrape-reddit:
 	python3 -m stories_app.scripts.scrape_reddit
 
