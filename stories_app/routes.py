@@ -5,6 +5,7 @@ from flask import Blueprint
 from sqlalchemy import func, and_
 from datetime import datetime
 from sqlalchemy.orm import aliased
+from stories_app.db import db
 
 from stories_app.models import Story, StoryCategory, StoryRating
 
@@ -30,7 +31,15 @@ def index():
     request_duration.observe(end_time - start_time)
     categories = StoryCategory.query.distinct(StoryCategory.category).all()
 
-    return render_template("index.html", top_rated=top_rated, categories=categories)
+    unique_model_names = db.session.query(Story.model_name).distinct().all()
+    unique_model_names = [result[0] for result in unique_model_names]
+
+    return render_template(
+        "index.html",
+        top_rated=top_rated,
+        categories=categories,
+        models=unique_model_names,
+    )
 
 
 @bp.route("/about")

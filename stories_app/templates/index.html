@@ -33,11 +33,19 @@
     </main>
     <section class="right-sidebar">
         <h4>Categories</h4>
+
         <ul>
         {% for category in categories %}
             <li> <a href="{{ url_for('stories.stories', categories=category.category) }}">{{ category.category }}</a></li>
         {% endfor %}
+        </ul>
+
+        <h4>Models</h4>
         <ul>
+        {% for model in models %}
+            <li> <a href="{{ url_for('stories.stories', model_name=model) }}">{{ model }}</a></li>
+        {% endfor %}
+        </ul>
 
     </section>
 </div>
