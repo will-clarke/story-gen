@@ -87,6 +87,11 @@ aside {
     padding: .5rem 1rem
 }
 
+.is_applied {
+  background-color: green;
+
+}
+
 .navbar-brand {
     display: inline-block;
     padding-top: .3125rem;

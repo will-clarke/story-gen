@@ -16,9 +16,9 @@
                 <li>
                     <a href="{{ url_for("stories.stories") }}">Clear Filter</a>
                 </li>
-                {% for (category, url) in categories %}
-                    <li>
-                        <a href="{{ url }}">{{ category }}</a>
+                {% for (category, url, is_applied) in categories %}
+                    <li class="{% if is_applied %}is_applied{% endif %}">
+                        <a href="{{ url }}" >{{ category }}</a>
                     </li>
                 {% endfor %}
             </ul>

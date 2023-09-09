@@ -124,30 +124,34 @@ def stories():
         for category in story.categories:
             unique_categories.add(category.category)
     categories: List[
-        Tuple[str, str]
-    ] = []  # a list of "categories" - which involves a name and then a url
+        Tuple[str, str, bool]
+    ] = (
+        []
+    )  # a list of "categories" - which involves a name, the url, and whether this category has already been applied
     for category in list(unique_categories):
+        category_is_applied_already = False
         existing_query_params = request.args.copy()
         if param_name in existing_query_params:
 
-            existing_query_params[param_name] = (
-                existing_query_params[param_name] + "," + category
-            )
-            # If it exists, append the new value to the existing value
-            # existing_value = existing_query_params.getlist(param_name)
-            # print("category", category)
-            # print("existing_value", existing_value)
-            # existing_value.append(category)
-
-            # print("existing_value", existing_value)
-            # existing_query_params.setlist(param_name, existing_value)
-            # print("existing_query_params", existing_query_params)
+            # remove the category if it exists and it gets clicked on
+            if category in existing_query_params[param_name]:
+                category_is_applied_already = True
+                existing_query_params[param_name] = (
+                    existing_query_params[param_name]
+                    .replace(category, "")
+                    .replace(",,", ",")
+                    .strip(",")
+                )
+            else:
+                # otherwise just add it
+                existing_query_params[param_name] = (
+                    existing_query_params[param_name] + "," + category
+                )
         else:
             # If it doesn't exist, add it with the new value
             existing_query_params[param_name] = category
         url = url_for("stories.stories", **existing_query_params)
-        print(url)
-        categories.append((category, url))
+        categories.append((category, url, category_is_applied_already))
 
         # Generate the updated URL with the modified query parameters
         # updated_url = url_for(request.endpoint, **existing_query_params)
@@ -155,9 +159,11 @@ def stories():
         # if "categories" in existing_query_params:
         #     url = url.replace(existing_query_params["categories"], category)
 
-    return render_template(
-        "stories.html", stories=stories, categories=categories, url=url
-    )
+    categories = sorted(categories, key=lambda x: x[0])  # sort by name first
+    categories = sorted(
+        categories, key=lambda x: x[2], reverse=True
+    )  # sort by whether the category is applied already
+    return render_template("stories.html", stories=stories, categories=categories)
 
 
 @bp.route("/random-story")
