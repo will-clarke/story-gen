@@ -25,7 +25,7 @@ bp = Blueprint("stories", __name__)
 def index():
     start_time = time.time()
     requests_total.inc()
-    top_rated = Story.top_rated()[:20]  # TODO: limit!
+    top_rated = Story.top_rated()
     end_time = time.time()
     request_duration.observe(end_time - start_time)
     return render_template("index.html", top_rated=top_rated)
@@ -64,7 +64,7 @@ def stories():
     if per_page:
         per_page = int(per_page)
     else:
-        per_page = 10
+        per_page = 30
     per_page = min(per_page, 200)
 
     # story = Story.query.paginate(page, per_page)

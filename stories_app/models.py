@@ -59,12 +59,13 @@ class Story(db.Model):
         return Story.query.order_by(desc("updated_at")).first()
 
     @staticmethod
-    def top_rated():
+    def top_rated(limit: int = 100):
         return (
             db.session.query(Story)
             .join(StoryRating, StoryRating.story_id == Story.id)
             .group_by(Story.id)
             .order_by(db.func.avg(StoryRating.rating).desc())
+            .limit(limit)
             .all()
         )
 
