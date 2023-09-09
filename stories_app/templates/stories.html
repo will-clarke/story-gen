@@ -1,27 +1,27 @@
 {% extends "layout.html" %}
 {% block body %}
-    <div class="container title">
-        <h1>Stories</h1>
-    </div>
-    <section>
-        {% for story in stories %}
-            <article class="story">
-                <a href="{{ url_for('stories.story', id=story.id) }}">{{ story.average_rating() |int }}% - {{ story.title }}</a>
-            </article>
-        {% endfor %}
-    </section>
-    <section>
-        <aside>
+    <div class="right-sidebar-grid">
+        <header class="header">
+            <h1>Stories (maybe include categories here?)</h1>
+        </header>
+        <main class="main-content">
+            {% for story in stories %}
+                <article class="story">
+                    <a href="{{ url_for('stories.story', id=story.id) }}">{{ story.average_rating() |int }}% - {{ story.title }}</a>
+                </article>
+            {% endfor %}
+        </main>
+        <section class="right-sidebar">
             <ul>
                 <li>
                     <a href="{{ url_for("stories.stories") }}">Clear Filter</a>
                 </li>
                 {% for (category, url, is_applied) in categories %}
-                    <li class="{% if is_applied %}is_applied{% endif %}">
-                        <a href="{{ url }}" >{{ category }}</a>
+                    <li class="{% if is_applied %}is-applied{% endif %}">
+                        <a href="{{ url }}">{{ category }}</a>
                     </li>
                 {% endfor %}
             </ul>
-        </aside>
-    </section>
+        </section>
+    </div>
 {% endblock %}

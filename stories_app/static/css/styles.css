@@ -19,15 +19,21 @@ html {
 /* assign columns to grid areas */
 .right-sidebar-grid > .header {
     grid-area:header;
-    /* background:#6a605c; */
 }
 .right-sidebar-grid > .main-content {
     grid-area:main-content;
-    /* background:#cfd6ea; */
 }
 .right-sidebar-grid > .right-sidebar {
     grid-area:right-sidebar;
     background: #cfd6ea;
+}
+
+.login {
+  float: right;
+}
+
+.is-applied {
+  background: #D5F9DE;
 }
 
 /* tablet breakpoint */
