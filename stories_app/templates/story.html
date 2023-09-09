@@ -31,7 +31,7 @@
         {% for category in story.categories %}
             <li> <a href="{{ url_for('stories.stories', categories=category.category) }}">{{ category }}</a></li>
         {% endfor %}
-        <ul>
+        </ul>
       {% endif %}
 
       <h4>Proposed Length: {{ story.length }}<h4>
