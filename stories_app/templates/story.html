@@ -6,39 +6,44 @@
 {% endblock %}
 
 {% block body %}
-<div class="container title">
-  <h1>{{ story.title }}</h1>
+
+
+<div class="right-sidebar-grid">
+    <header class="header">  
+      <h1>{{ story.title }}</h1>
+    </header>
+    <main class="main-content">
+      {{ story.text }}
+    </main>
+    <section class="right-sidebar">
+      {% if story.ratings|length > 0 %}
+        <h4>Ratings</h4>
+        <ul>
+          {% for rating in story.ratings %}
+          <li>{{ rating}}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if story.categories|length > 0 %}
+        <h4>Categories</h4>
+        <ul>
+        {% for category in story.categories %}
+            <li> <a href="{{ url_for('stories.stories', categories=category.category) }}">{{ category }}</a></li>
+        {% endfor %}
+        <ul>
+      {% endif %}
+
+      <h4>Proposed Length: {{ story.length }}<h4>
+      <h4>Model: {{ story.model_name }}</h4>
+      <h4>Created At: {{ story.created_at }}</h4>
+    </section>
 </div>
 
 
-<section>
-<article class="story">
-  {{ story.text }}
-</article>
 
-<aside>
-{% if story.ratings|length > 0 %}
-  <h4>Ratings</h4>
-  <ul>
-    {% for rating in story.ratings %}
-    <li>{{ rating}}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
 
-{% if story.categories|length > 0 %}
-  <h4>Categories</h4>
-  <ul>
-  {% for category in story.categories %}
-      <li> <a href="{{ url_for('stories.stories', categories=category.category) }}">{{ category }}</a></li>
-  {% endfor %}
-  <ul>
-{% endif %}
 
-<h4>Proposed Length: {{ story.length }}<h4>
-<h4>Model: {{ story.model_name }}</h4>
-<h4>Created At: {{ story.created_at }}</h4>
 
-</aside>
-</section>
+
 {% endblock %}

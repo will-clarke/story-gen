@@ -1,107 +1,41 @@
-/* Reset default styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+html {
+    font-size: calc(15px + 0.390625vw);
 }
 
-/* Set a clear font and default font size */
-body {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  padding: 2em;
+/* grid container */
+.right-sidebar-grid {
+    display:grid;
+    grid-template-areas:
+        'header'
+        'main-content'
+        'right-sidebar'
 }
 
-/* Add spacing to headings and paragraphs */
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 20px;
+/* general column padding */
+.right-sidebar-grid > * {
+    padding:1rem;
 }
 
-section {
-    position: relative; /* Ensure relative positioning for absolute child */
-    width: 100%; /* Set the section's width */
-    margin: 0 auto; /* Center the section horizontally */
-    padding: 20px; /* Add some padding for spacing */
+/* assign columns to grid areas */
+.right-sidebar-grid > .header {
+    grid-area:header;
+    /* background:#6a605c; */
+}
+.right-sidebar-grid > .main-content {
+    grid-area:main-content;
+    /* background:#cfd6ea; */
+}
+.right-sidebar-grid > .right-sidebar {
+    grid-area:right-sidebar;
+    background: #cfd6ea;
 }
 
-.story {
-    width: 70%; /* Set the article's width to 70% */
-    float: left; /* Float it to the left to make room for the aside */
-}
-
-/* Style for the aside */
-aside {
-    position: absolute; /* Absolute positioning relative to the section */
-    top: 0; /* Align the top of the aside with the section */
-    right: 0; /* Align the right of the aside with the section */
-    width: 30%; /* Set the aside's width to 30% */
-    background-color: #f0f0f0; /* Add a background color for visibility */
-    padding: 20px; /* Add some padding for content spacing */
-}
-
-
-@media (max-width: 768px) {
-  article, aside {
-      width: 100%; /* On small screens, make both the article and aside take the full width */
-      float: none; /* Remove floating */
-      position: static;
-  }
-}
-
-/* aside { */
-/*   width: 30%; */
-/*   padding-left: 15px; */
-/*   margin-left: 15px; */
-/*   float: right; */
-/*   font-style: italic; */
-/*   background-color: lightgray; */
-/* } */
-
-/* p { */
-/*   margin-bottom: 10px; */
-/* } */
-
-.title {
-  text-align: center;
-  padding: 3em;
-}
-
-.title ul {
-  list-style-type: none;
-}
-
-.container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto
-}
-
-.navbar {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: .5rem 1rem
-}
-
-.is_applied {
-  background-color: green;
-
-}
-
-.navbar-brand {
-    display: inline-block;
-    padding-top: .3125rem;
-    padding-bottom: .3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    white-space: nowrap
-}
-
-.navbar-brand:hover,.navbar-brand:focus {
-    text-decoration: none
+/* tablet breakpoint */
+@media (min-width:768px) {
+    .right-sidebar-grid {
+        grid-template-columns:repeat(3, 1fr);
+        grid-template-areas:
+            'header header header'
+            'main-content main-content right-sidebar'
+    }
 }
