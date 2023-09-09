@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>About Us</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
-</head>
+{% block body %}
+<h1 class="center">About</h1>
+<main class="main-content">
+  <p>I tried to get a load of different AI models to generate a load of different stories.</p>
+  <p>I also tried getting the models to rate the stories... but that's not especially good.</p>
+  <p>Maybe this will improve as I get better at making models that can write or review stories ¯\_(ツ)_/¯</p>
+  <br />
+</main>
 
-<body>
-  <h1>About Us</h1>
 
-  <p>This is the about page.</p>
-  <a href="{{ url_for('index') }}">Home</a>
-</body>
 
-</html>
+
+
+
+
+{% endblock %}

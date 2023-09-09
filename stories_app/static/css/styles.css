@@ -36,6 +36,10 @@ html {
   background: #D5F9DE;
 }
 
+.center {
+  text-align: center;
+}
+
 /* tablet breakpoint */
 @media (min-width:768px) {
     .right-sidebar-grid {

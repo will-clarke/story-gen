@@ -1,8 +1,10 @@
 {% extends "layout.html" %}
+
+
 {% block body %}
-    <div class="container title">
-        <h1>AI-generated short stories</h1>
-    </div>
+<h1 class="center">📚 AI-generated short stories</h1>
+<div class="right-sidebar-grid">
+    <main class="main-content">
     <ul>
         <li>
             <a href="{{ url_for("stories.about") }}">About Us</a>
@@ -27,4 +29,24 @@
             {% endfor %}
         </ul>
     </container>
+
+    </main>
+    <section class="right-sidebar">
+        <h4>Categories</h4>
+        <ul>
+        {% for category in categories %}
+            <li> <a href="{{ url_for('stories.stories', categories=category.category) }}">{{ category.category }}</a></li>
+        {% endfor %}
+        <ul>
+
+    </section>
+</div>
+
+
+
+
+
+
+
 {% endblock %}
+

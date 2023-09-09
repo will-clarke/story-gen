@@ -25,10 +25,12 @@ bp = Blueprint("stories", __name__)
 def index():
     start_time = time.time()
     requests_total.inc()
-    top_rated = Story.top_rated()
+    top_rated = Story.top_rated(20)
     end_time = time.time()
     request_duration.observe(end_time - start_time)
-    return render_template("index.html", top_rated=top_rated)
+    categories = StoryCategory.query.distinct(StoryCategory.category).all()
+
+    return render_template("index.html", top_rated=top_rated, categories=categories)
 
 
 @bp.route("/about")
