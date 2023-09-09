@@ -46,6 +46,9 @@ def story(id):
 
 @bp.route("/stories")
 def stories():
+    start_time = time.time()
+    requests_total.inc()
+
     page = request.args.get("page")
     per_page = request.args.get("per_page")
     model_name = request.args.get("model_name")
@@ -168,6 +171,9 @@ def stories():
     categories = sorted(
         categories, key=lambda x: x[2], reverse=True
     )  # sort by whether the category is applied already
+
+    end_time = time.time()
+    request_duration.observe(end_time - start_time)
     return render_template("stories.html", stories=stories, categories=categories)
 
 
