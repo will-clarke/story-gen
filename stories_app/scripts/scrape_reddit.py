@@ -1,6 +1,7 @@
 from praw import Reddit
 import praw.models
 import time
+from datetime import datetime
 
 from stories_app.scripts.util import get_password
 from stories_app.app import create_app
@@ -25,6 +26,16 @@ app.app_context().push()
 session = db.session
 subreddit = reddit.subreddit("shortstories")
 start_time = time.time()
+
+
+def format_time(timestamp):
+    # Convert the timestamp to a datetime object
+    rfc3339_datetime = datetime.fromtimestamp(timestamp).astimezone()
+
+    # Format the datetime object as RFC3339
+    rfc3339_string = rfc3339_datetime.isoformat()
+
+    return rfc3339_string
 
 
 # last datareddit id
@@ -81,5 +92,5 @@ for subreddit in subreddits:
         time_now = time.time()
         total_duration = time_now - start_time
         save_submission(submission)
+        print("count: ", count,"duration:", total_duration, "time_now:", format_time(time.time()), "reddit_limits:",  reddit.auth.limits)
         time.sleep(4)
-        print(count, reddit.auth.limits)
