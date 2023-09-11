@@ -24,6 +24,7 @@ app = create_app()
 app.app_context().push()
 session = db.session
 subreddit = reddit.subreddit("shortstories")
+start_time = time.time()
 
 
 # last datareddit id
@@ -62,19 +63,23 @@ def save_submission(submission: praw.models.Submission):
 
 
 subreddits = [
-    subreddit.controversial(limit=None),
-    subreddit.gilded(limit=None),
-    subreddit.hot(limit=None),
-    subreddit.new(limit=None),
-    subreddit.rising(limit=None),
     subreddit.top(limit=None, time_filter="week"),
     subreddit.top(limit=None, time_filter="year"),
     subreddit.top(limit=None, time_filter="month"),
     subreddit.hot(limit=None),
+    subreddit.hot(limit=None),
+    subreddit.new(limit=None),
+    subreddit.rising(limit=None),
+    subreddit.controversial(limit=None),
+    subreddit.gilded(limit=None),
 ]
 
+count = 0
 for subreddit in subreddits:
     for submission in subreddit:
+        count += 1
+        time_now = time.time()
+        total_duration = time_now - start_time
         save_submission(submission)
         time.sleep(4)
-        print(reddit.auth.limits)
+        print(count, reddit.auth.limits)
