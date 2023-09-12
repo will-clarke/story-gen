@@ -11,3 +11,4 @@ stories_app/data/
 
 venv
 llms
+reddit-data.csv

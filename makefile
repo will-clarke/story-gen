@@ -9,6 +9,9 @@ script-scrape-reddit:
 script-reddit-to-csv:
 	python3 -m stories_app.scripts.reddit_to_csv
 
+script-download-reddit-csv:
+	scp will@161.35.40.10:/home/will/story-gen/stories_app/data/data.csv reddit-data.csv
+
 setup:
 	source venv/bin/activate.fish
 	pip install -r requirements.txt
