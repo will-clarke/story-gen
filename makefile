@@ -1,5 +1,14 @@
 all: dev
 
+
+docker: docker-run
+
+docker-run: docker-build
+	docker run --rm --name omg omg -p 8000:5000
+
+docker-build:
+	docker build -t omg .
+
 install:
 	pip install -r requirements.txt
 

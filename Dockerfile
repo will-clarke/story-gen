@@ -8,5 +8,4 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
-# xecStart=/home/will/story-gen/venv/bin/gunicorn --workers 3 --bind unix:stories.sock -m 007 app:app
+CMD ["gunicorn", "app:app" ]
