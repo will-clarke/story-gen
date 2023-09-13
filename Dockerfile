@@ -8,4 +8,5 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "app:app" ]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000","app:app" ]
+# gunicorn --bind 0.0.0.0:5000 app:app

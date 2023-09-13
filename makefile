@@ -4,7 +4,7 @@ all: dev
 docker: docker-run
 
 docker-run: docker-build
-	docker run --publish 5000:8000 --rm --name omg omg 
+	docker run --publish 5000:5000 --rm --name omg omg 
 
 docker-build:
 	docker build -t omg .
