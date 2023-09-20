@@ -24,11 +24,8 @@ from sqlalchemy import (
 )
 from ctransformers import AutoModelForCausalLM
 
-from langchain.llms import CTransformers
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from sqlalchemy.orm import Session
-from stories_app.models import Story, StoryCategory, StoryRating
 
 
 model_name = "TheBloke/Llama-2-7B-Chat-GGML"
@@ -38,8 +35,8 @@ llm("AI is going to")
 
 db_uri = "postgresql:///stories"
 engine = create_engine(db_uri, echo=True)
-Session = sessionmaker(bind=engine)
-session = Session()
+session_factory = sessionmaker(bind=engine)
+session = session_factory()
 
 Base = declarative_base()
 
