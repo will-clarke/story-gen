@@ -1,4 +1,4 @@
-# !pip install ctransformers ctransformers[cuda] sqlalchemy
+# !pip install ctransformers ctransformers[cuda] sqlalchemy langchain
 
 import datetime
 import uuid
@@ -22,18 +22,25 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
 )
-from ctransformers import AutoModelForCausalLM
+
+# from ctransformers import AutoModelForCausalLM
+
+from langchain.llms import CTransformers
+
 
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 
 model_name = "TheBloke/Llama-2-7B-Chat-GGML"
-llm = AutoModelForCausalLM.from_pretrained(model_name, gpu_layers=50)
+
+llm = CTransformers(model=model_name, gpu_layers=50)
+
+# llm = AutoModelForCausalLM.from_pretrained(model_name, gpu_layers=50)
 
 llm("AI is going to")
 
-db_uri = "postgresql:///stories"
+db_uri = "sqlite:///content/gdrive/ai/stories.db"
 engine = create_engine(db_uri, echo=True)
 session_factory = sessionmaker(bind=engine)
 session = session_factory()
